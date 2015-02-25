@@ -22,7 +22,7 @@ See `<http://morepath.readthedocs.org/en/latest/security.html>`_ to learn more
 about Morepath's security model and and have
 a look at the commented source code:
 
-`<https://github.com/seantis/more.itsdangerous/more/itsdangerous/identity_policy.py>`_
+`<https://github.com/seantis/more.itsdangerous/blob/master/more/itsdangerous/identity_policy.py>`_
 
 The IdentityPolicy class is meant to be extended because everyone has differing
 needs. It simply provides a way to store the identity as a signed cookie, using
