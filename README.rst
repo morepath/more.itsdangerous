@@ -11,7 +11,6 @@ Usage
     import morepath
     from more.itsdangerous import IdentityPolicy
 
-
     class App(morepath.App):
         pass
 
