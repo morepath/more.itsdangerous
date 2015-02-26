@@ -15,12 +15,17 @@ class IdentityPolicy(object):
     policy *signs* values, it doesn't encrypt or hide them.
     """
 
-    def __init__(self):
-        # As long as the secret is not stored anywhere, the signed values all
-        # become invalid every time the secret is changed. Currently, that
-        # would mean that logged in users would be logged out if the
-        # application is restarted.
-        self.secret = new_uuid().hex
+    @morepath.reify
+    def secret(self):
+        """ The secret used to for the signatures.
+
+        As long as the secret is not stored anywhere, the signed values all
+        become invalid every time the secret is changed. Currently, that
+        would mean that logged in users would be logged out if the
+        application is restarted.
+
+        """
+        return new_uuid().hex
 
     @property
     def identity_class(self):
