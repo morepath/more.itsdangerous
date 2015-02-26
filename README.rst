@@ -18,6 +18,13 @@ Usage
     def get_identity_policy():
         return IdentityPolicy()
 
+    @App.verify_identity()
+    def verify_identity(identity):
+        # trust the identity established by the identity policy (we could keep
+        # checking if the user is really in the database here - or if it was
+        # removed in the meantime)
+        return True
+
 See `<http://morepath.readthedocs.org/en/latest/security.html>`_ to learn more
 about Morepath's security model and and have
 a look at the commented source code:
