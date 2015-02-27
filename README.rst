@@ -6,7 +6,7 @@ An identity policy for morepath using itsdangerous.
 Usage
 -----
 
-::
+.. code-block:: python
 
     import morepath
     from more.itsdangerous import IdentityPolicy
