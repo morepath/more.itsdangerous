@@ -24,7 +24,7 @@ setup(
     version=version,
     description=description,
     long_description=get_long_description(),
-    url='http://github.com/seantis/more.itsdangerous',
+    url='http://github.com/morepath/more.itsdangerous',
     author='Seantis GmbH',
     author_email='info@seantis.ch',
     license='BSD',
