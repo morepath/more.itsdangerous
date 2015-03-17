@@ -59,15 +59,15 @@ More Itsdangerous uses `Semantic Versioning <http://semver.org/>`_
 Build Status
 ------------
 
-.. image:: https://travis-ci.org/seantis/more.itsdangerous.png
-  :target: https://travis-ci.org/seantis/more.itsdangerous
+.. image:: https://travis-ci.org/morepath/more.itsdangerous.png
+  :target: https://travis-ci.org/morepath/more.itsdangerous
   :alt: Build Status
 
 Coverage
 --------
 
-.. image:: https://coveralls.io/repos/seantis/more.itsdangerous/badge.png?branch=master
-  :target: https://coveralls.io/r/seantis/more.itsdangerous?branch=master
+.. image:: https://coveralls.io/repos/morepath/more.itsdangerous/badge.png?branch=master
+  :target: https://coveralls.io/r/morepath/more.itsdangerous?branch=master
   :alt: Project Coverage
 
 Latests PyPI Release
