@@ -31,10 +31,7 @@ def test_signatures():
 
 def test_expired_signature():
 
-    class ShortIdentityPolicy(IdentityPolicy):
-        max_age = 0.1
-
-    ip = ShortIdentityPolicy()
+    ip = IdentityPolicy(max_age=0.1)
     signed = ip.sign('admin', 'username')
 
     assert ip.unsign(signed, 'username') == 'admin'
@@ -86,3 +83,15 @@ def test_custom_policy():
     ip.forget(response, request)
 
     assert response.cookies == {}
+
+
+def test_cookie_settings():
+    ip = IdentityPolicy()
+    assert ip.cookie_settings['max_age'] == 3600
+    assert ip.cookie_settings['secure']
+    assert ip.cookie_settings['httponly']
+
+    ip = IdentityPolicy(max_age=1, secure=False, httponly=False)
+    assert ip.cookie_settings['max_age'] == 1
+    assert not ip.cookie_settings['secure']
+    assert not ip.cookie_settings['httponly']

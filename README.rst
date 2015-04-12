@@ -35,6 +35,26 @@ The IdentityPolicy class is meant to be extended because everyone has differing
 needs. It simply provides a way to store the identity as a signed cookie, using
 itsdangerous.
 
+Usage in Development
+--------------------
+
+By default, the cookies created by more.itsdangerous are
+`HttpOnly <http://en.wikipedia.org/wiki/HTTP_cookie#HttpOnly_cookie>`_ and
+`Secure <http://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie>`_.
+
+If you have differing needs or if you are running a development server you
+might have to change the identity policy's configuration:
+
+.. code-block:: python
+
+    @App.identity_policy()
+    def get_identity_policy():
+        # make the cookies work under http, not just https
+        return IdentityPolicy(secure=False)
+
+Note that this should only be used in development. In this day and age you do
+not want to transmit cookies over http!
+
 Run the Tests
 -------------
 

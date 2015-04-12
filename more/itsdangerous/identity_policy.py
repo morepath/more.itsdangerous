@@ -15,6 +15,26 @@ class IdentityPolicy(object):
     policy *signs* values, it doesn't encrypt or hide them.
     """
 
+    def __init__(self, max_age=3600, secure=True, httponly=True):
+        """ Configures the identity policy with the following values:
+
+        :max_age:
+            The max age of both the signature and the cookie in seconds.
+            Defaults to 3600 seconds.
+
+        :secure:
+            True if the cookies should only be transmitted over https.
+            Defaults to True.
+
+        :httponly:
+            True if the cookies should not be accessible through client side
+            scripts. Defaults to True.
+
+        """
+        self.max_age = max_age
+        self.secure = secure
+        self.httponly = httponly
+
     @morepath.reify
     def secret(self):
         """ The secret used to for the signatures.
@@ -51,16 +71,6 @@ class IdentityPolicy(object):
         return ('userid', )
 
     @property
-    def max_age(self):
-        """ The max age of both the signature and the cookies in seconds.
-
-        Once a signature/cookie reaches this age, the user will basically be
-        logged out.
-
-        """
-        return 3600  # signed values are valid for one hour
-
-    @property
     def cookie_settings(self):
         """ Returns the default cookie settings.
 
@@ -72,8 +82,8 @@ class IdentityPolicy(object):
         """
         return {
             'max_age': self.max_age,
-            'secure': True,
-            'httponly': True
+            'secure': self.secure,
+            'httponly': self.httponly
         }
 
     def identify(self, request):
