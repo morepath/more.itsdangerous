@@ -6,7 +6,7 @@ name = 'more.itsdangerous'
 description = (
     'An identity policy for morepath using itsdangerous.'
 )
-version = '0.0.1'
+version = '0.0.0'
 
 
 def get_long_description():
