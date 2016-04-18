@@ -50,7 +50,7 @@ class IdentityPolicy(object):
     @property
     def identity_class(self):
         """ The identity class to use. """
-        return morepath.security.Identity
+        return morepath.Identity
 
     @property
     def required_keys(self):
@@ -61,7 +61,7 @@ class IdentityPolicy(object):
         identity. See the additional keyword values in the default identity:
 
         http://morepath.readthedocs.org/en/latest/api.html
-        #morepath.security.Identity
+        #morepath.Identity
 
         Note that those values are send in *cleartext*! So do not add
         information that is absolutely secret.
