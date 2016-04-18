@@ -41,7 +41,7 @@ def test_expired_signature():
 
 def test_policy():
     ip = IdentityPolicy()
-    identity = morepath.security.Identity(userid='aaron', role='admin')
+    identity = morepath.Identity(userid='aaron', role='admin')
     request = TestRequest()
     response = TestResponse()
 
@@ -57,7 +57,7 @@ def test_custom_policy():
         required_keys = ('userid', 'role')
 
     ip = CustomIdentityPolicy()
-    identity = morepath.security.Identity(userid='aaron', role='admin')
+    identity = morepath.Identity(userid='aaron', role='admin')
     request = TestRequest()
     response = TestResponse()
 
