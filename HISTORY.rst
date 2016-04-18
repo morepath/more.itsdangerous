@@ -1,6 +1,9 @@
 Changelog
 ---------
 
+0.0.2 (2016-04-18)
+~~~~~~~~~~~~~~~~~~~
+
 - Adds compatibility with Morepath 0.14+.
   [henri-hulski]
 
