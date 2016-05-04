@@ -10,8 +10,9 @@ version = '0.0.2'
 
 
 def get_long_description():
-    readme = open('README.rst').read()
-    history = open('HISTORY.rst').read()
+    import io
+    readme = io.open('README.rst', encoding='utf-8').read()
+    history = io.open('HISTORY.rst', encoding='utf-8').read()
 
     # cut the part before the description to avoid repetition on pypi
     readme = readme[readme.index(description) + len(description):]
