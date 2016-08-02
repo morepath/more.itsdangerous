@@ -1,17 +1,20 @@
 language: python
 
+python: 3.5
 env:
     - TOXENV=py27
     - TOXENV=py33
     - TOXENV=py34
+    - TOXENV=py35
     - TOXENV=pep8
+    - TOXENV=coverage
 install:
     - pip install tox
-    - if [ "$TOXENV" = 'py34' ]; then pip install coveralls; fi
+    - if [ "$TOXENV" = 'coverage' ]; then pip install coveralls; fi
 script:
     - tox -e $TOXENV
 after_success:
-    - if [ "$TOXENV" = 'py34' ]; then coveralls; fi
+    - if [ "$TOXENV" = 'coverage' ]; then coveralls; fi
 deploy:
     provider: pypi
     user: seantis
@@ -20,4 +23,4 @@ deploy:
     distributions: "sdist bdist_wheel"
     on:
         tags: true
-        condition: $TOXENV = py34
+        condition: $TOXENV = py35
