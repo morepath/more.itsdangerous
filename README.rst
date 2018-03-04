@@ -92,7 +92,7 @@ Coverage
 
 Latests PyPI Release
 --------------------
-.. image:: https://pypip.in/v/more.itsdangerous/badge.png
+.. image:: https://img.shields.io/pypi/v/more.itsdangerous.svg
   :target: https://crate.io/packages/more.itsdangerous
   :alt: Latest PyPI Release
 
