@@ -4,7 +4,7 @@ import time
 from more.itsdangerous import IdentityPolicy
 
 
-class TestRequest(object):
+class TestRequest:
     cookies = {}
 
 

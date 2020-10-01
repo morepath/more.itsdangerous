@@ -4,7 +4,7 @@ from itsdangerous import TimestampSigner, SignatureExpired, BadSignature
 from uuid import uuid4 as new_uuid
 
 
-class IdentityPolicy(object):
+class IdentityPolicy:
     """ A Morepath IdentityPolicy that stores attributes of the identity
     as cookies with a signature.
 
