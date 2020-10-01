@@ -4,6 +4,10 @@ Changelog
 0.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~
 
+- Add support for Python 3.6 - 3.8.
+
+- Remove support for Python versions < 3.6.
+
 - Add Python 3.5 and make it the default test environment.
   [henri-hulski]
 
