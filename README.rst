@@ -65,7 +65,7 @@ Install tox and run it::
 
 Limit the tests to a specific python version::
 
-    tox -e py27
+    tox -e py38
 
 Conventions
 -----------
