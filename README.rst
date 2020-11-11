@@ -79,8 +79,8 @@ More Itsdangerous uses `Semantic Versioning <http://semver.org/>`_
 Build Status
 ------------
 
-.. image:: https://travis-ci.org/morepath/more.itsdangerous.png
-  :target: https://travis-ci.org/morepath/more.itsdangerous
+.. image:: https://travis-ci.com/morepath/more.itsdangerous.png
+  :target: https://travis-ci.com/morepath/more.itsdangerous
   :alt: Build Status
 
 Coverage
