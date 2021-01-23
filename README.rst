@@ -1,3 +1,17 @@
+.. image:: https://github.com/morepath/more.itsdangerous/workflows/CI/badge.svg?branch=master
+   :target: https://github.com/morepath/more.itsdangerous/actions?workflow=CI
+   :alt: CI Status
+
+.. image:: https://coveralls.io/repos/github/morepath/more.itsdangerous/badge.svg?branch=master
+    :target: https://coveralls.io/github/morepath/morepath_sqlamore.itsdangerouslchemy?branch=master
+
+.. image:: https://img.shields.io/pypi/v/more.itsdangerous.svg
+  :target: https://pypi.org/project/more.itsdangerous/
+
+.. image:: https://img.shields.io/pypi/pyversions/more.itsdangerous.svg
+  :target: https://pypi.org/project/more.itsdangerous/
+
+
 More Itsdangerous
 =================
 
@@ -65,7 +79,7 @@ Install tox and run it::
 
 Limit the tests to a specific python version::
 
-    tox -e py38
+    tox -e py39
 
 Conventions
 -----------
@@ -75,26 +89,6 @@ More Itsdangerous follows PEP8 as close as possible. To test for it run::
     tox -e pep8
 
 More Itsdangerous uses `Semantic Versioning <http://semver.org/>`_
-
-Build Status
-------------
-
-.. image:: https://travis-ci.com/morepath/more.itsdangerous.png
-  :target: https://travis-ci.com/morepath/more.itsdangerous
-  :alt: Build Status
-
-Coverage
---------
-
-.. image:: https://coveralls.io/repos/morepath/more.itsdangerous/badge.png?branch=master
-  :target: https://coveralls.io/r/morepath/more.itsdangerous?branch=master
-  :alt: Project Coverage
-
-Latests PyPI Release
---------------------
-.. image:: https://img.shields.io/pypi/v/more.itsdangerous.svg
-  :target: https://crate.io/packages/more.itsdangerous
-  :alt: Latest PyPI Release
 
 License
 -------

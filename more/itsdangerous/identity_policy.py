@@ -5,7 +5,7 @@ from uuid import uuid4 as new_uuid
 
 
 class IdentityPolicy:
-    """ A Morepath IdentityPolicy that stores attributes of the identity
+    """A Morepath IdentityPolicy that stores attributes of the identity
     as cookies with a signature.
 
     You probably want to override this class in your application, to fit it
@@ -16,7 +16,7 @@ class IdentityPolicy:
     """
 
     def __init__(self, max_age=3600, secure=True, httponly=True):
-        """ Configures the identity policy with the following values:
+        """Configures the identity policy with the following values:
 
         :max_age:
             The max age of both the signature and the cookie in seconds.
@@ -37,7 +37,7 @@ class IdentityPolicy:
 
     @morepath.reify
     def secret(self):
-        """ The secret used to for the signatures.
+        """The secret used to for the signatures.
 
         As long as the secret is not stored anywhere, the signed values all
         become invalid every time the secret is changed. Currently, that
@@ -54,7 +54,7 @@ class IdentityPolicy:
 
     @property
     def required_keys(self):
-        """ The attributes of the identity which are signed and stored as
+        """The attributes of the identity which are signed and stored as
         cookies.
 
         This is useful to add additional values that are present on your
@@ -68,11 +68,11 @@ class IdentityPolicy:
 
         """
 
-        return ('userid', )
+        return ("userid",)
 
     @property
     def cookie_settings(self):
-        """ Returns the default cookie settings.
+        """Returns the default cookie settings.
 
         See also:
 
@@ -81,13 +81,13 @@ class IdentityPolicy:
 
         """
         return {
-            'max_age': self.max_age,
-            'secure': self.secure,
-            'httponly': self.httponly
+            "max_age": self.max_age,
+            "secure": self.secure,
+            "httponly": self.httponly,
         }
 
     def identify(self, request):
-        """ Returns the identity of the given request, if *all* cookies
+        """Returns the identity of the given request, if *all* cookies
         match, or None.
 
         """
@@ -115,7 +115,7 @@ class IdentityPolicy:
             response.delete_cookie(key)
 
     def sign(self, unsigned_value, salt):
-        """ Signs a value with a salt using itsdangerous.TimestampSigner and
+        """Signs a value with a salt using itsdangerous.TimestampSigner and
         returns the resulting signed value.
 
         The salt might not be what you think it is:
@@ -124,7 +124,7 @@ class IdentityPolicy:
         return TimestampSigner(self.secret, salt=salt).sign(unsigned_value)
 
     def unsign(self, signed_value, salt):
-        """ Takes the signed value and returns it unsigned, if possible.
+        """Takes the signed value and returns it unsigned, if possible.
 
         If the signature is bad or if it expired, None is returned.
         """
@@ -138,7 +138,7 @@ class IdentityPolicy:
             unsigned = signer.unsign(signed_value, max_age=self.max_age)
 
             # see http://pythonhosted.org/itsdangerous/#python-3-notes
-            return unsigned.decode('utf-8')
+            return unsigned.decode("utf-8")
 
         except (SignatureExpired, BadSignature):
             return None
