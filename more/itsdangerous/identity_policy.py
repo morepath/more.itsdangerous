@@ -49,7 +49,7 @@ class IdentityPolicy:
 
     @property
     def identity_class(self):
-        """ The identity class to use. """
+        """The identity class to use."""
         return morepath.Identity
 
     @property
@@ -104,13 +104,13 @@ class IdentityPolicy:
             return self.identity_class(userid, **signatures)
 
     def remember(self, response, request, identity):
-        """ Stores the given identity in the cookies of the response. """
+        """Stores the given identity in the cookies of the response."""
         for key in self.required_keys:
             signed_value = self.sign(getattr(identity, key), salt=key)
             response.set_cookie(key, signed_value, **self.cookie_settings)
 
     def forget(self, response, request):
-        """ Removes the identity from the cookies, basically forgetting it. """
+        """Removes the identity from the cookies, basically forgetting it."""
         for key in self.required_keys:
             response.delete_cookie(key)
 
