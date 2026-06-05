@@ -4,9 +4,13 @@ Changelog
 0.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~
 
-- Add support for Python 3.6 - 3.9.
+- Switch to a PEP-420 namespace package
 
-- Remove support for Python versions < 3.6.
+- Add support for Python 3.10 - 3.14.
+  [Daverball]
+
+- Remove support for Python versions < 3.10.
+  [Daverball]
 
 - Add Python 3.5 and make it the default test environment. (superseded)
   [henri-hulski]

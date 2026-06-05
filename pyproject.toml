@@ -1,0 +1,129 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "more.itsdangerous"
+version = "0.0.2"
+dynamic = ["readme"]
+description = "An identity policy for morepath using itsdangerous."
+license = "BSD-3-Clause"
+license-files = ["license/LICENSE"]
+authors = [{name = "Seantis AG", email = "info@seantis.ch"}]
+maintainers = [{name = "Henri Hulski", email = "henri@sancode.it"}]
+classifiers = [
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">= 3.10"
+dependencies = ["itsdangerous", "morepath"]
+
+[project.urls]
+Repository = "https://github.com/morepath/more.itsdangerous"
+Issues = "https://github.com/morepath/more.itsdangerous/issues"
+Changelog = "https://github.com/morepath/more.itsdangerous/blob/master/HISTORY.rst"
+
+[project.optional-dependencies]
+test = ["pytest >= 8", "pytest-env"]
+coverage = ["pytest-cov"]
+lint = ["black", "flake8", "flake8-pyproject"]
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "HISTORY.rst"]}
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = ["more/itsdangerous"]
+addopts = ["-vv"]
+env = ["RUN_ENV=test"]
+
+[tool.coverage.run]
+omit = ["more/itsdangerous/tests/*"]
+source = ["more/itsdangerous"]
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.flake8]
+show-source = true
+ignore = ["E203", "E231", "W503"]
+max-line-length = 88
+
+[tool.bumpversion]
+current_version = "0.0.2"
+commit = true
+message = "Release {new_version}"
+tag = true
+tag_message = "Release {new_version}"
+regex = true
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+search= 'version = "{current_version}"'
+replace= 'version = "{new_version}"'
+
+[[tool.bumpversion.files]]
+filename = "HISTORY.rst"
+search = """
+---------(?:
+
+(?:unreleased|[0-9]+\\.[0-9]+\\.[0-9]+(:?\\.[a-z]+[0-9]*)? \\(unreleased\\))
+~+)
+"""
+replace = """
+---------
+
+{new_version} ({now:%d.%m.%Y})
+~~~~~~~~~~~~~~~~~~~
+"""
+
+[tool.tox]
+requires = ["tox>=4"]
+env_list = [
+    "py310",
+    "py311",
+    "py312",
+    "py313",
+    "py314",
+    "pypy3",
+    "coverage",
+    "pre-commit",
+]
+skip_missing_interpreters = true
+
+[tool.tox.gh.python]
+"3.10" = ["py310"]
+"3.11" = ["py311"]
+"3.12" = ["py312"]
+"3.13" = ["py313"]
+"3.14" = ["py314", "pre-commit", "coverage"]
+"pypy-3.11" = ["pypy3"]
+
+[tool.tox.env_run_base]
+package = "editable"
+extras = ["test"]
+commands = [["pytest", "{posargs:more}"]]
+
+[tool.tox.env.coverage]
+base_python = ["python3"]
+extras = ["test", "coverage"]
+commands = [
+    ["pytest", "--cov", "--cov-fail-under=100", "{posargs:more}"],
+]
+
+[tool.tox.env.pre-commit]
+base_python = ["python3"]
+package = "skip"
+deps = ["pre-commit"]
+commands = [
+    ["pre-commit", "run", "--all-files"],
+]
