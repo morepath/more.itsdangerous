@@ -22,6 +22,7 @@ classifiers = [
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 requires-python = ">= 3.10"
+# TODO: Pin morepath to >= 1
 dependencies = ["itsdangerous", "morepath"]
 
 [project.urls]
@@ -33,9 +34,14 @@ Changelog = "https://github.com/morepath/more.itsdangerous/blob/master/HISTORY.r
 test = ["pytest >= 8", "pytest-env"]
 coverage = ["pytest-cov"]
 lint = ["black", "flake8", "flake8-pyproject"]
+mypy = ["mypy", "pytest", "types-WebOb"]
+pyright = ["pyright", "pytest", "types-WebOb"]
 
 [tool.setuptools.packages]
 find = {}
+
+[tool.setuptools.package-data]
+"more.itsdangerous" = ["py.typed"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.rst", "HISTORY.rst"]}
@@ -57,6 +63,11 @@ show_missing = true
 show-source = true
 ignore = ["E203", "E231", "W503"]
 max-line-length = 88
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_unreachable = true
 
 [tool.bumpversion]
 current_version = "0.0.2"
@@ -97,12 +108,14 @@ env_list = [
     "pypy3",
     "coverage",
     "pre-commit",
+    "mypy",
+    "pyright",
 ]
 skip_missing_interpreters = true
 
 [tool.tox.gh.python]
 "3.10" = ["py310"]
-"3.11" = ["py311"]
+"3.11" = ["py311", "mypy", "pyright"]
 "3.12" = ["py312"]
 "3.13" = ["py313"]
 "3.14" = ["py314", "pre-commit", "coverage"]
@@ -111,6 +124,7 @@ skip_missing_interpreters = true
 [tool.tox.env_run_base]
 package = "editable"
 extras = ["test"]
+deps = ["-r{tox_root}/requirements/corelibs.txt"]
 commands = [["pytest", "{posargs:more}"]]
 
 [tool.tox.env.coverage]
@@ -126,4 +140,26 @@ package = "skip"
 deps = ["pre-commit"]
 commands = [
     ["pre-commit", "run", "--all-files"],
+]
+
+[tool.tox.env.mypy]
+base_python = ["python3"]
+extras = ["mypy"]
+commands = [
+    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.10"],
+    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.11"],
+    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.12"],
+    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.13"],
+    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.14"],
+]
+
+[tool.tox.env.pyright]
+base_python = ["python3"]
+extras = ["pyright"]
+commands = [
+    ["pyright", "more/itsdangerous", "--pythonversion", "3.10"],
+    ["pyright", "more/itsdangerous", "--pythonversion", "3.11"],
+    ["pyright", "more/itsdangerous", "--pythonversion", "3.12"],
+    ["pyright", "more/itsdangerous", "--pythonversion", "3.13"],
+    ["pyright", "more/itsdangerous", "--pythonversion", "3.14"],
 ]

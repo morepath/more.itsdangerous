@@ -1,7 +1,14 @@
+from __future__ import annotations
+
 import morepath
 
 from itsdangerous import TimestampSigner, SignatureExpired, BadSignature
+from typing import TYPE_CHECKING, Any
 from uuid import uuid4 as new_uuid
+
+if TYPE_CHECKING:
+    from morepath import Identity, Request
+    from webob import Response as BaseResponse
 
 
 class IdentityPolicy:
@@ -15,7 +22,9 @@ class IdentityPolicy:
     policy *signs* values, it doesn't encrypt or hide them.
     """
 
-    def __init__(self, max_age=3600, secure=True, httponly=True):
+    def __init__(
+        self, max_age: float = 3600, secure: bool = True, httponly: bool = True
+    ) -> None:
         """Configures the identity policy with the following values:
 
         :max_age:
@@ -36,7 +45,7 @@ class IdentityPolicy:
         self.httponly = httponly
 
     @morepath.reify
-    def secret(self):
+    def secret(self) -> str:
         """The secret used to for the signatures.
 
         As long as the secret is not stored anywhere, the signed values all
@@ -48,12 +57,12 @@ class IdentityPolicy:
         return new_uuid().hex
 
     @property
-    def identity_class(self):
+    def identity_class(self) -> type[Identity]:
         """The identity class to use."""
         return morepath.Identity
 
     @property
-    def required_keys(self):
+    def required_keys(self) -> tuple[str, ...]:
         """The attributes of the identity which are signed and stored as
         cookies.
 
@@ -63,7 +72,7 @@ class IdentityPolicy:
         http://morepath.readthedocs.org/en/latest/api.html
         #morepath.Identity
 
-        Note that those values are send in *cleartext*! So do not add
+        Note that those values are sent in *cleartext*! So do not add
         information that is absolutely secret.
 
         """
@@ -71,7 +80,7 @@ class IdentityPolicy:
         return ("userid",)
 
     @property
-    def cookie_settings(self):
+    def cookie_settings(self) -> dict[str, Any]:
         """Returns the default cookie settings.
 
         See also:
@@ -86,14 +95,13 @@ class IdentityPolicy:
             "httponly": self.httponly,
         }
 
-    def identify(self, request):
+    def identify(self, request: Request) -> Identity | None:
         """Returns the identity of the given request, if *all* cookies
         match, or None.
 
         """
         signatures = {
-            k: self.unsign(request.cookies.get(k), salt=k)
-            for k in self.required_keys
+            k: self.unsign(request.cookies.get(k), salt=k) for k in self.required_keys
         }
 
         if None in signatures.values():
@@ -103,18 +111,20 @@ class IdentityPolicy:
 
             return self.identity_class(userid, **signatures)
 
-    def remember(self, response, request, identity):
+    def remember(
+        self, response: BaseResponse, request: Request, identity: Identity
+    ) -> None:
         """Stores the given identity in the cookies of the response."""
         for key in self.required_keys:
             signed_value = self.sign(getattr(identity, key), salt=key)
             response.set_cookie(key, signed_value, **self.cookie_settings)
 
-    def forget(self, response, request):
+    def forget(self, response: BaseResponse, request: Request) -> None:
         """Removes the identity from the cookies, basically forgetting it."""
         for key in self.required_keys:
             response.delete_cookie(key)
 
-    def sign(self, unsigned_value, salt):
+    def sign(self, unsigned_value: str | bytes, salt: str | bytes) -> bytes:
         """Signs a value with a salt using itsdangerous.TimestampSigner and
         returns the resulting signed value.
 
@@ -123,7 +133,7 @@ class IdentityPolicy:
         """
         return TimestampSigner(self.secret, salt=salt).sign(unsigned_value)
 
-    def unsign(self, signed_value, salt):
+    def unsign(self, signed_value: str | bytes | None, salt: str | bytes) -> str | None:
         """Takes the signed value and returns it unsigned, if possible.
 
         If the signature is bad or if it expired, None is returned.
@@ -135,10 +145,10 @@ class IdentityPolicy:
         signer = TimestampSigner(self.secret, salt=salt)
 
         try:
-            unsigned = signer.unsign(signed_value, max_age=self.max_age)
+            unsigned = signer.unsign(signed_value, max_age=self.max_age)  # type: ignore
 
             # see http://pythonhosted.org/itsdangerous/#python-3-notes
-            return unsigned.decode("utf-8")
+            return unsigned.decode("utf-8")  # type: ignore
 
         except (SignatureExpired, BadSignature):
             return None

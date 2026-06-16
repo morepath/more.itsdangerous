@@ -4,7 +4,11 @@ Changelog
 0.0.3 (unreleased)
 ~~~~~~~~~~~~~~~~~~
 
-- Switch to a PEP-420 namespace package
+- Add type hints.
+  [Daverball]
+
+- Switch to a PEP-420 namespace package.
+  [Daverball]
 
 - Add support for Python 3.10 - 3.14.
   [Daverball]
