@@ -2,9 +2,6 @@
    :target: https://github.com/morepath/more.itsdangerous/actions?workflow=CI
    :alt: CI Status
 
-.. image:: https://coveralls.io/repos/github/morepath/more.itsdangerous/badge.svg?branch=master
-    :target: https://coveralls.io/github/morepath/morepath_sqlamore.itsdangerouslchemy?branch=master
-
 .. image:: https://img.shields.io/pypi/v/more.itsdangerous.svg
   :target: https://pypi.org/project/more.itsdangerous/
 
@@ -39,7 +36,7 @@ Usage
         # removed in the meantime)
         return True
 
-See `<http://morepath.readthedocs.org/en/latest/security.html>`_ to learn more
+See `<https://morepath.readthedocs.io/en/latest/security.html>`_ to learn more
 about Morepath's security model and and have
 a look at the commented source code:
 
@@ -53,8 +50,8 @@ Usage in Development
 --------------------
 
 By default, the cookies created by more.itsdangerous are
-`HttpOnly <http://en.wikipedia.org/wiki/HTTP_cookie#HttpOnly_cookie>`_ and
-`Secure <http://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie>`_.
+`HttpOnly <https://en.wikipedia.org/wiki/HTTP_cookie#HttpOnly_cookie>`_ and
+`Secure <https://en.wikipedia.org/wiki/HTTP_cookie#Secure_cookie>`_.
 
 If you have differing needs or if you are running a development server you
 might have to change the identity policy's configuration:
@@ -88,7 +85,7 @@ More Itsdangerous follows PEP8 as close as possible. To test for it run::
 
     tox -e pep8
 
-More Itsdangerous uses `Semantic Versioning <http://semver.org/>`_
+More Itsdangerous uses `Semantic Versioning <https://semver.org/>`_
 
 License
 -------
