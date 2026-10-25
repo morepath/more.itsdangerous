@@ -1,14 +1,15 @@
 from __future__ import annotations
 
-import morepath
-
-from itsdangerous import TimestampSigner, SignatureExpired, BadSignature
 from typing import TYPE_CHECKING, Any
 from uuid import uuid4 as new_uuid
 
+import morepath
+from itsdangerous import BadSignature, SignatureExpired, TimestampSigner
+
 if TYPE_CHECKING:
-    from morepath import Identity, Request
     from webob import Response as BaseResponse
+
+    from morepath import Identity, Request
 
 
 class IdentityPolicy:

@@ -1,10 +1,10 @@
 from __future__ import annotations
 
-import morepath
 import time
-
-from more.itsdangerous import IdentityPolicy
 from typing import Any
+
+import morepath
+from more.itsdangerous import IdentityPolicy
 
 
 class TestRequest:
