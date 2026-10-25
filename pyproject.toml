@@ -1,165 +1,166 @@
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools >= 69"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "more.itsdangerous"
-version = "0.0.2"
+version = "1.0.0.dev0"
 dynamic = ["readme"]
 description = "An identity policy for morepath using itsdangerous."
 license = "BSD-3-Clause"
 license-files = ["license/LICENSE"]
 authors = [{name = "Seantis AG", email = "info@seantis.ch"}]
 maintainers = [{name = "Henri Hulski", email = "henri@sancode.it"}]
+keywords = ["morepath", "itsdangerous", "identity", "authentication"]
 classifiers = [
     "Intended Audience :: Developers",
-    "Programming Language :: Python :: 3.10",
+    "Environment :: Web Environment",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
     "Programming Language :: Python :: 3 :: Only",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Programming Language :: Python :: Implementation :: CPython",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Development Status :: 5 - Production/Stable",
+    "Typing :: Typed",
 ]
-requires-python = ">= 3.10"
-# TODO: Pin morepath to >= 1
-dependencies = ["itsdangerous", "morepath"]
+requires-python = ">= 3.11"
+dependencies = ["morepath >= 1.0.0", "itsdangerous"]
 
 [project.urls]
+Documentation = "https://github.com/morepath/more.itsdangerous/blob/master/README.rst"
 Repository = "https://github.com/morepath/more.itsdangerous"
 Issues = "https://github.com/morepath/more.itsdangerous/issues"
 Changelog = "https://github.com/morepath/more.itsdangerous/blob/master/HISTORY.rst"
 
 [project.optional-dependencies]
-test = ["pytest >= 8", "pytest-env"]
+test = ["pytest >= 9", "pytest-env"]
 coverage = ["pytest-cov"]
-lint = ["black", "flake8", "flake8-pyproject"]
+lint = ["ruff"]
 mypy = ["mypy", "pytest", "types-WebOb"]
 pyright = ["pyright", "pytest", "types-WebOb"]
 
-[tool.setuptools.packages]
-find = {}
-
-[tool.setuptools.package-data]
-"more.itsdangerous" = ["py.typed"]
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.rst", "HISTORY.rst"]}
 
-[tool.pytest.ini_options]
-minversion = "8.0"
-testpaths = ["more/itsdangerous"]
-addopts = ["-vv"]
+[tool.pytest]
+minversion = "9.0"
+addopts = [
+    "-vv",
+    "--import-mode=importlib",
+]
+consider_namespace_packages = true
+testpaths = ["src"]
 env = ["RUN_ENV=test"]
+filterwarnings = [
+    "ignore:'cgi' is deprecated:DeprecationWarning",
+]
 
 [tool.coverage.run]
-omit = ["more/itsdangerous/tests/*"]
-source = ["more/itsdangerous"]
+omit = ["src/more/itsdangerous/tests/*"]
+source = ["src"]
 
 [tool.coverage.report]
 show_missing = true
 
-[tool.flake8]
-show-source = true
-ignore = ["E203", "E231", "W503"]
-max-line-length = 88
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "TC", "UP", "RUF"]
+ignore = ["E501", "RUF012"]
+future-annotations = true
+
+[tool.ruff.lint.isort]
+extra-standard-library = ["typing_extensions"]
+known-first-party = ["morepath"]
 
 [tool.mypy]
-python_version = "3.10"
+python_version = "3.11"
 strict = true
+files = ["src"]
+mypy_path = ["src"]
+explicit_package_bases = true
 warn_unreachable = true
+warn_unused_configs = true
+warn_unused_ignores = true
 
-[tool.bumpversion]
-current_version = "0.0.2"
-commit = true
-message = "Release {new_version}"
-tag = true
-tag_message = "Release {new_version}"
-regex = true
-
-[[tool.bumpversion.files]]
-filename = "pyproject.toml"
-search= 'version = "{current_version}"'
-replace= 'version = "{new_version}"'
-
-[[tool.bumpversion.files]]
-filename = "HISTORY.rst"
-search = """
----------(?:
-
-(?:unreleased|[0-9]+\\.[0-9]+\\.[0-9]+(:?\\.[a-z]+[0-9]*)? \\(unreleased\\))
-~+)
-"""
-replace = """
----------
-
-{new_version} ({now:%d.%m.%Y})
-~~~~~~~~~~~~~~~~~~~
-"""
+[tool.pyright]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+include = ["src"]
 
 [tool.tox]
-requires = ["tox>=4"]
+requires = ["tox>=4.21.1"]
 env_list = [
-    "py310",
     "py311",
     "py312",
     "py313",
     "py314",
+    "py315",
     "pypy3",
     "coverage",
-    "pre-commit",
+    "lint",
     "mypy",
     "pyright",
 ]
 skip_missing_interpreters = true
 
 [tool.tox.gh.python]
-"3.10" = ["py310"]
-"3.11" = ["py311", "mypy", "pyright"]
+"3.11" = ["py311"]
 "3.12" = ["py312"]
 "3.13" = ["py313"]
-"3.14" = ["py314", "pre-commit", "coverage"]
-"pypy-3.11" = ["pypy3"]
+"3.14" = ["py314", "coverage", "lint", "mypy", "pyright"]
+"3.15" = ["py315"]
+"pypy-3.12" = ["pypy3"]
 
 [tool.tox.env_run_base]
 package = "editable"
 extras = ["test"]
-deps = ["-r{tox_root}/requirements/corelibs.txt"]
-commands = [["pytest", "{posargs:more}"]]
+commands = [["pytest", "{posargs:src}"]]
 
 [tool.tox.env.coverage]
-base_python = ["python3"]
+base_python = ["python3.14"]
 extras = ["test", "coverage"]
 commands = [
-    ["pytest", "--cov", "--cov-fail-under=100", "{posargs:more}"],
+    ["pytest", "--cov", "--cov-fail-under=100", "{posargs:src}"],
 ]
 
-[tool.tox.env.pre-commit]
-base_python = ["python3"]
-package = "skip"
-deps = ["pre-commit"]
+[tool.tox.env.lint]
+base_python = ["python3.14"]
+extras = ["lint"]
 commands = [
-    ["pre-commit", "run", "--all-files"],
+    ["ruff", "check", "."],
+    ["ruff", "format", "--check", "."],
 ]
 
 [tool.tox.env.mypy]
-base_python = ["python3"]
+base_python = ["python3.14"]
 extras = ["mypy"]
 commands = [
-    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.10"],
-    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.11"],
-    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.12"],
-    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.13"],
-    ["mypy", "-p", "more.itsdangerous", "--python-version", "3.14"],
+    ["mypy", "--python-version", "3.11"],
+    ["mypy", "--python-version", "3.12"],
+    ["mypy", "--python-version", "3.13"],
+    ["mypy", "--python-version", "3.14"],
+    ["mypy", "--python-version", "3.15"],
 ]
 
 [tool.tox.env.pyright]
-base_python = ["python3"]
+base_python = ["python3.14"]
 extras = ["pyright"]
 commands = [
-    ["pyright", "more/itsdangerous", "--pythonversion", "3.10"],
-    ["pyright", "more/itsdangerous", "--pythonversion", "3.11"],
-    ["pyright", "more/itsdangerous", "--pythonversion", "3.12"],
-    ["pyright", "more/itsdangerous", "--pythonversion", "3.13"],
-    ["pyright", "more/itsdangerous", "--pythonversion", "3.14"],
+    ["pyright", "--pythonversion", "3.11"],
+    ["pyright", "--pythonversion", "3.12"],
+    ["pyright", "--pythonversion", "3.13"],
+    ["pyright", "--pythonversion", "3.14"],
+    ["pyright", "--pythonversion", "3.15"],
 ]
+
+[tool.zest-releaser]
+release = false
+upload-pypi = false
+tag-format = "v{version}"
