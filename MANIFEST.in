@@ -1,7 +1,2 @@
-recursive-include more *
-recursive-include docs *
-include *.txt
-include *.rst
-global-exclude *.mo
-global-exclude *.pyc
-global-exclude __pycache__/*
+include *.rst *.txt
+exclude .githooks/pre-commit

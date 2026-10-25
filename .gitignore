@@ -1,53 +1,30 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# C extensions
-*.so
+# Byte-compiled / optimized
+__pycache__
+*.py[co]
 
 # Distribution / packaging
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+*.egg-info
+/build
+/dist
+pip-wheel-metadata
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Virtualenv
+.venv
+/env
+/venv
 
 # Unit test / coverage reports
-htmlcov/
-.tox/
 .coverage
+htmlcov
+.tox
+
+# Caches
 .cache
-nosetests.xml
-coverage.xml
-
-# Translations
-*.mo
-
-# Django stuff:
-*.log
+.*_cache
 
 # Sphinx documentation
-docs/_build/
+/doc/_build
 
-# PyBuilder
-target/
+# Editor
+/.vscode
+/.idea
